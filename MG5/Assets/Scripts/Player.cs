@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     private Animator _animator;
+    private Transform _transform;
 
     // STEP 1 -----------------------------------------------------------------
     // First, we are going to make our Pudu walk to where the player clicked
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
     // Add a MEMBER VARIABLE here for the NavMeshAgent Component named _agent.
     // It does NOT need to be tunable in the Inspector.
 
-    NavMeshAgent _agent;
+    private NavMeshAgent _agent;
 
     // STEP 1 -----------------------------------------------------------------
 
@@ -28,7 +29,11 @@ public class Player : MonoBehaviour
     // We need a Vector3 to keep track of their LAST KNOWN LOCATION.
     // Add a MEMBER VARIABLE here for that location.
     // It does NOT need to be tunable in the Inspector.
-    
+    private Vector3 lastKnown;
+
+
+
+
 
     // STEP 4 -----------------------------------------------------------------
 
@@ -47,12 +52,13 @@ public class Player : MonoBehaviour
     //      to use GetComponent to grab this GameObject's NavMeshAgent and store
     //      it in the _agent MEMBER VARIABLE.
     //
-    //private void ????()
-    //{
-    //
-    //    _mainCamera = Camera.main;
-    //    _animator = GetComponent<Animator>();
-    //}
+    private void Start()
+    {
+    
+        _mainCamera = Camera.main;
+        _animator = GetComponent<Animator>();
+        _agent = gameObject.GetComponent<NavMeshAgent>();
+    }
     // STEP 2 -----------------------------------------------------------------
 
     // ------------------------------------------------------------------------
@@ -76,6 +82,8 @@ public class Player : MonoBehaviour
                 //
                 // Feature 2 should work after this step.
 
+                _agent.SetDestination(mouseHitPosition);
+
 
                 // STEP 3 -----------------------------------------------------
 
@@ -88,10 +96,22 @@ public class Player : MonoBehaviour
                 // You'll need this GameObject's Transform's position.
                 // See an example in the documentation: https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Transform-position.html
 
-
+                _transform = gameObject.GetComponent<Transform>();
+                lastKnown = _transform.position;
+           
+                 
                 // STEP 5 -----------------------------------------------------
             }
         }
+
+        if (Input.GetKey(KeyCode.Space)){
+            //_transform = gameObject.GetComponent<Transform>();
+            //_transform.position = lastKnown;
+
+            _agent.Warp(lastKnown);
+
+            Debug.Log("SPACE IS CLICKED");
+        } 
 
         // STEP 6 -------------------------------------------------------------
         // Finally, we want to TELEPORT the player to the LAST KNOWN LOCATION
