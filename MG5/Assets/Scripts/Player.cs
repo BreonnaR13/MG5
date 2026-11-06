@@ -105,9 +105,6 @@ public class Player : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Space)){
-            //_transform = gameObject.GetComponent<Transform>();
-            //_transform.position = lastKnown;
-
             _agent.Warp(lastKnown);
 
             Debug.Log("SPACE IS CLICKED");
