@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // Add a MEMBER VARIABLE here for the NavMeshAgent Component named _agent.
     // It does NOT need to be tunable in the Inspector.
 
-    // ??? _agent
+    NavMeshAgent _agent;
 
     // STEP 1 -----------------------------------------------------------------
 
